@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/Users/romana/Desktop/TicTacToe/build",
+  "command": "/usr/bin/clang++  -I/Users/romana/Desktop/TicTacToe/src -g -std=gnu++20 -Werror -Wall -Wextra -Wpedantic -pedantic-errors -Wimplicit-fallthrough -o CMakeFiles/TicTacToe.dir/src/Player.cpp.o -c /Users/romana/Desktop/TicTacToe/src/Player.cpp",
+  "file": "/Users/romana/Desktop/TicTacToe/src/Player.cpp",
+  "output": "CMakeFiles/TicTacToe.dir/src/Player.cpp.o"
+},
+{
+  "directory": "/Users/romana/Desktop/TicTacToe/build",
+  "command": "/usr/bin/clang++  -I/Users/romana/Desktop/TicTacToe/src -g -std=gnu++20 -Werror -Wall -Wextra -Wpedantic -pedantic-errors -Wimplicit-fallthrough -o CMakeFiles/TicTacToe.dir/src/main.cpp.o -c /Users/romana/Desktop/TicTacToe/src/main.cpp",
+  "file": "/Users/romana/Desktop/TicTacToe/src/main.cpp",
+  "output": "CMakeFiles/TicTacToe.dir/src/main.cpp.o"
+}
+]

@@ -22,3 +22,4 @@ if(MSVC)
 else()
    target_compile_options(${PROJECT_NAME} PRIVATE -Werror -Wall -Wextra -Wpedantic -pedantic-errors -Wimplicit-fallthrough)
 endif()
+

@@ -3,7 +3,7 @@
 
 Player create_player(){
     Player p;
-    std::cout<<"Entrez votre nom:";
+    std::cout<<"Entrez votre nom: ";
     std::cin >> p.name;
 
     char symbol;
@@ -14,9 +14,18 @@ Player create_player(){
         if(symbol == 'X' || symbol == 'O'){
             p.symbol= symbol;
             break;
-        } else {
-         std::cout <<"[ERROR] Choisir X ou O"<<std::endl;
-        }
+            } else {
+            std::cout <<"[ERROR] Choisir X ou O"<<std::endl;
+            }
+            }
+    return p;
     }
+
+Player create_player(char other_symbol){
+    Player p;
+    std::cout<<"Entrez votre nom: ";
+    std::cin >> p.name;
+
+    p.symbol= other_symbol;
     return p;
 }

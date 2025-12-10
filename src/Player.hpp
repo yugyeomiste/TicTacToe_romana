@@ -7,3 +7,5 @@ struct Player {
 };
 
 Player create_player();
+
+Player create_player(char other_symbol);

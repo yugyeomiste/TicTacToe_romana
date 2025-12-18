@@ -4,7 +4,19 @@
 
 using Board = std::array<std::array<char, 3>, 3>;
 
-void init_board(Board& board);
-void draw_game_board(const Board& board);
+class Game {
+public:
+    Game(); 
+    void run(); 
 
-void play_turn(Board& board, const Player& player);
+private:
+    void init_board();
+    void draw_game_board() const;
+    void play_turn(Player& player);
+    bool check_win(char symbol) const;
+    void setup_players(); 
+
+    Board board;
+    Player p1;
+    Player p2;
+};

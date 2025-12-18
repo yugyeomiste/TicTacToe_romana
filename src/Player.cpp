@@ -1,5 +1,6 @@
 #include<iostream>
 #include"Player.hpp"
+#include <cctype>
 
 Player create_player(){
     Player p;
@@ -10,6 +11,8 @@ Player create_player(){
     while (true) {
         std::cout <<"Choisissez X ou O; ";
         std::cin>> symbol;
+
+        symbol= std::toupper(symbol);
 
         if(symbol == 'X' || symbol == 'O'){
             p.symbol= symbol;

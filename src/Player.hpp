@@ -1,5 +1,5 @@
 #pragma once
-#include<string>
+#include <string>
 
 struct Player {
     std::string name;
@@ -7,5 +7,3 @@ struct Player {
 };
 
 Player create_player();
-
-Player create_player(char other_symbol);

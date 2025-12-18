@@ -21,11 +21,3 @@ Player create_player(){
     return p;
     }
 
-Player create_player(char other_symbol){
-    Player p;
-    std::cout<<"Entrez votre nom: ";
-    std::cin >> p.name;
-
-    p.symbol= other_symbol;
-    return p;
-}

@@ -7,6 +7,8 @@ Player create_player(){
     std::cout<<"Entrez votre nom: ";
     std::cin >> p.name;
 
+    // si mm symbol pris
+
     char symbol;
     while (true) {
         std::cout <<"Choisissez X ou O; ";

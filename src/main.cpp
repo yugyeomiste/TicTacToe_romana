@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cctype>
 #include "Player.hpp"
 #include "Game.hpp"
 
@@ -21,9 +22,6 @@ int main() {
     std::cout <<"Joueur 2 " <<p2.name<< " joue le " << p2.symbol <<std::endl;
 
     std::cout<<p1.name<<" VS "<<p2.name<< " START! ";
-
-    std::cout << "LE MATCH : " << p1.name << " (" << p1.symbol << ") VS " 
-                << p2.name << " (" << p2.symbol << ") START !"<<std::endl;
 
         Board plateau;
 

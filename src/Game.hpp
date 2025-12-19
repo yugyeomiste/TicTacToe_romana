@@ -13,7 +13,7 @@ private:
     void init_board();
     void draw_game_board() const;
     void play_turn(Player& player);
-    void play_ai_turn();
+    void play_ia_turn();
     bool check_win(char symbol) const;
     void setup_players(); 
 

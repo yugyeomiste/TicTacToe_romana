@@ -2,6 +2,7 @@
 #include <cctype>
 #include <random>
 #include <vector>
+#include <limits>
 #include"Player.hpp"
 #include "Game.hpp"
 
@@ -10,20 +11,32 @@ Game::Game() {}
 void Game::setup_players(){
 
     // Menu
-    std::cout << "   MORPION    " << std::endl;
+    std::cout << "  JEU DU MORPION    " << std::endl;
     std::cout << "1. Joueur vs Joueur" << std::endl;
-    std::cout << "2. Joueur vs Ordi" << std::endl;
-    std::cout << "Choix : ";
+    std::cout << "2. Joueur vs IA" << std::endl;
     
     int choix = 0;
-    std::cin >> choix;
+
+    while (true) {
+        std::cout << "Choix : ";
+        if (std::cin >> choix) {
+            // Verif si nombre 1 ou 2
+            if (choix == 1 || choix == 2) {
+                break; 
+            } else {
+                std::cout << "ERROR : Tapez 1 ou 2." << std::endl;
+            }
+        } else {
+            // si l'utilisateur tape autre chose
+            std::cout << "ERROR : Choisir 1 ou 2 !" << std::endl;
+            std::cin.clear(); // on répare cin
+            std::cin.ignore(1000, '\n'); // on vide la mauvaise saisie
+        }
+    }
 
     // On regarde le choix du joueur
-    if (choix == 2) {
-        mode_ia = true;
-    } else {
-        mode_ia = false;
-    }
+    mode_ia = (choix == 2);
+    
     std::cout << std::endl;
 
     //Joueur 1
@@ -33,9 +46,10 @@ void Game::setup_players(){
     
     //Joueur 2
     std::cout<< "Joueur 2"<<std::endl;
-    if (mode_ia == true) {
-        // choix ordi
-        p2.name = "Ordi";
+
+    if (mode_ia) {
+        // choix IA
+        p2.name = "IA";
         
         // Il prend l'autre symbole'
         if (p1.symbol == 'X') {
@@ -43,7 +57,7 @@ void Game::setup_players(){
         } else {
             p2.symbol = 'X';
         }
-        std::cout << "L'ordi joue avec " << p2.symbol << std::endl;
+        std::cout << "L'IA joue avec " << p2.symbol << std::endl;
 
         } else {
         // Si humain, on demande ses infos
@@ -90,7 +104,14 @@ void Game::play_turn(Player& player) {
 
     while (true) {
         std::cout << player.name << ", choisis une case (1-9) : ";
-        std::cin >> choix;
+
+       if (!(std::cin >> choix)) {
+            // si le joueur tape une lettre
+            std::cout << "Choisir une case (1-9) !" << std::endl;
+            std::cin.clear(); // On répare
+            std::cin.ignore(1000, '\n'); 
+            continue; 
+        }
 
         // Entre 1 et 9
         if (choix < 1 || choix > 9) {
@@ -115,8 +136,8 @@ void Game::play_turn(Player& player) {
     }      
 
 
-void Game::play_ai_turn() {
-    std::cout << "Tour de l'ordi..." << std::endl;
+void Game::play_ia_turn() {
+    std::cout << "Tour de l'IA..." << std::endl;
 
     // Cherche les cases vides
     std::vector<int> cases_vides;
@@ -147,7 +168,7 @@ void Game::play_ai_turn() {
         int col = case_choisie % 3;
 
         board[ligne][col] = p2.symbol;
-        std::cout << "L'ordi a joue en case " << (case_choisie + 1) << std::endl;
+        std::cout << "L'IA a joue en case " << (case_choisie + 1) << std::endl;
     }
     }   
 
@@ -189,8 +210,8 @@ void Game::run() {
         } else {
             // Sinon c'est le joueur 2 ou IA
 
-            if (mode_ia == true) {
-                play_ai_turn();
+            if (mode_ia) {
+                play_ia_turn();
             } else {
                 play_turn(p2);
             }

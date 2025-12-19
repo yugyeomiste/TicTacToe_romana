@@ -16,6 +16,7 @@ private:
     void play_ia_turn();
     bool check_win(char symbol) const;
     void setup_players(); 
+    void erase_terminal() const;
 
     Board board;
     Player p1;

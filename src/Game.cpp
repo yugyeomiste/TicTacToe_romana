@@ -5,10 +5,17 @@
 #include <limits>
 #include"Player.hpp"
 #include "Game.hpp"
+#include <terminal_ctrl.hpp>
 
 Game::Game() {}
 
+void Game::erase_terminal() const {
+    terminal_ctrl::clear_screen();
+    terminal_ctrl::set_cursor_position(1, 3);
+}
+
 void Game::setup_players(){
+    erase_terminal();
 
     // Menu
     std::cout << "  JEU DU MORPION    " << std::endl;

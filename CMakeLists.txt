@@ -2,6 +2,17 @@
 cmake_minimum_required(VERSION 3.20)
 
 project(TicTacToe)
+
+#Ajout librairie consigne
+
+include(FetchContent)
+FetchContent_Declare(
+    terminal_ctrl
+    GIT_REPOSITORY https://github.com/dsmtE/terminal_ctrl
+    GIT_TAG "main"
+)
+FetchContent_MakeAvailable(terminal_ctrl)
+
 add_executable(${PROJECT_NAME})
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 
@@ -13,6 +24,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS src/*)
 target_sources(${PROJECT_NAME} PRIVATE ${MY_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE src)
+target_link_libraries(${PROJECT_NAME} PUBLIC terminal_ctrl)
 # Enable many good warnings.
 # /WX and -Werror enable "warnings as errors": This means that your code won't compile if you have any warning.
 # This forces you to take warnings into account, which is a good practice because warnings are here for a reason and can save you from a lot of bugs!

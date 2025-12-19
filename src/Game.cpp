@@ -18,7 +18,7 @@ void Game::setup_players(){
     erase_terminal();
 
     // Menu
-    std::cout << "  JEU DU MORPION    " << std::endl;
+    std::cout << "   JEU DU MORPION    " << std::endl;
     std::cout << "1. Joueur vs Joueur" << std::endl;
     std::cout << "2. Joueur vs IA" << std::endl;
     
@@ -110,6 +110,7 @@ void Game::play_turn(Player& player) {
     int choix = 0;
 
     while (true) {
+        std::cout << info_case << std::endl << std::endl;
         std::cout << player.name << ", choisis une case (1-9) : ";
 
        if (!(std::cin >> choix)) {
@@ -137,6 +138,7 @@ void Game::play_turn(Player& player) {
         } else {
             
             board[ligne][col] = player.symbol;
+            info_case = player.name + " a joué en case " + std::to_string(choix);
             break; 
         }
         }
@@ -144,7 +146,6 @@ void Game::play_turn(Player& player) {
 
 
 void Game::play_ia_turn() {
-    std::cout << "Tour de l'IA..." << std::endl;
 
     // Cherche les cases vides
     std::vector<int> cases_vides;
@@ -175,7 +176,7 @@ void Game::play_ia_turn() {
         int col = case_choisie % 3;
 
         board[ligne][col] = p2.symbol;
-        std::cout << "L'IA a joue en case " << (case_choisie + 1) << std::endl;
+        info_case = "L'IA a joue en case " + std::to_string(case_choisie + 1);
     }
     }   
 
@@ -204,11 +205,21 @@ void Game::run() {
 
     // Boucle max de 9 tours
     for (int i = 0; i < 9; i++) {
+
+        // efface l'ecran
+        erase_terminal(); 
+        
+        
+        std::cout << " TOUR " << (i + 1) << " / 9 " << std::endl;
+        
+        // plateau a jour
+        draw_game_board();
         
         // Si i est pair c'est le joueur 1
         if (i % 2 == 0) {
             play_turn(p1);
             if (check_win(p1.symbol)) {
+                erase_terminal();
                 draw_game_board();
                 std::cout << "Bravo " << p1.name << ", GAGNE la partie !" << std::endl;
                 gagne = true;

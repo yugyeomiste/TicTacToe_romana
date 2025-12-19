@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include<string>
 #include"Player.hpp"
 
 using Board = std::array<std::array<char, 3>, 3>;
@@ -23,4 +24,6 @@ private:
     Player p2;
 
     bool mode_ia;
+    std::string info_case;
+
 };

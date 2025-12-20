@@ -18,6 +18,7 @@ private:
     bool check_win(char symbol) const;
     void setup_players(); 
     void erase_terminal() const;
+    int blocking_ia(char symbol) const;
 
     Board board;
     Player p1;

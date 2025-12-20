@@ -142,42 +142,136 @@ void Game::play_turn(Player& player) {
         }
         }
     }      
+int Game::blocking_ia(char symbol) const {
+    
+    // verif lignes
+    for (int i = 0; i < 3; i++) {
+        int compteur = 0;
+        int index_vide = -1; 
+
+        for (int j = 0; j < 3; j++) {
+            if (board[i][j] == symbol) {
+                compteur++;
+            } else if (board[i][j] != 'X' && board[i][j] != 'O') {
+                
+                index_vide = (i * 3) + j;
+            }
+        }
+        // 2 symboles + 1 case vide
+        if (compteur == 2 && index_vide != -1) {
+            return index_vide;
+        }
+    }
+
+    // colonnes
+    for (int j = 0; j < 3; j++) {
+        int compteur = 0;
+        int index_vide = -1;
+
+        for (int i = 0; i < 3; i++) {
+            if (board[i][j] == symbol) {
+                compteur++;
+            } else if (board[i][j] != 'X' && board[i][j] != 'O') {
+                index_vide = (i * 3) + j;
+            }
+        }
+        if (compteur == 2 && index_vide != -1) {
+            return index_vide;
+        }
+    }
+
+    // Diagonales
+    
+    int d1_indices[3] = {0, 4, 8}; 
+    int compteur = 0;
+    int index_vide = -1;
+    
+    for (int k = 0; k < 3; k++) {
+        int case_idx = d1_indices[k];
+        int r = case_idx / 3;
+        int c = case_idx % 3;
+        
+        if (board[r][c] == symbol) compteur++;
+        else if (board[r][c] != 'X' && board[r][c] != 'O') index_vide = case_idx;
+    }
+    if (compteur == 2 && index_vide != -1) return index_vide;
+
+    int d2_indices[3] = {2, 4, 6};
+    compteur = 0;
+    index_vide = -1;
+
+    for (int k = 0; k < 3; k++) {
+        int case_idx = d2_indices[k];
+        int l = case_idx / 3;
+        int c = case_idx % 3;
+        
+        if (board[l][c] == symbol) compteur++;
+        else if (board[l][c] != 'X' && board[l][c] != 'O') index_vide = case_idx;
+    }
+    if (compteur == 2 && index_vide != -1) return index_vide;
+
+    return -1;
+}
 
 
 void Game::play_ia_turn() {
 
-    // Cherche les cases vides
-    std::vector<int> cases_vides;
+int case_choisie = -1;
 
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            // Si c'est pas un symbole X ou O, c'est libre
-            if (board[i][j] != 'X' && board[i][j] != 'O') {
-                // On garde le numero de la case 
-                int numero = i * 3 + j;
-                cases_vides.push_back(numero);
-            }
+    case_choisie = blocking_ia(p2.symbol);
+    
+    if (case_choisie != -1) {
+        info_case = "L'IA gagne en case " + std::to_string(case_choisie + 1);
+    } 
+    else {
+        // IA regarde si le joueur va gagner
+        case_choisie = blocking_ia(p1.symbol);
+        
+        if (case_choisie != -1) {
+             info_case = "L'IA bloque le joueur en case " + std::to_string(case_choisie + 1);
+        }
+        else {
+
+            // Cherche les cases vides
+        std::vector<int> cases_vides;
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                // Si c'est pas un symbole X ou O, c'est libre
+                if (board[i][j] != 'X' && board[i][j] != 'O') {
+                    // On garde le numero de la case 
+                    int numero = i * 3 + j;
+                    cases_vides.push_back(numero);
+            }   
         }
     }
 
-    // on en choisit une au hasard
-    if (cases_vides.size() > 0) {
-        // random
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> distrib(0, cases_vides.size() - 1);
+     // on en choisit une au hasard
+     if (cases_vides.size() > 0) {
+          // random
+          std::random_device rd;
+          std::mt19937 gen(rd());
+          std::uniform_int_distribution<> distrib(0, cases_vides.size() - 1);
 
-        int random_number = distrib(gen);
-        int case_choisie = cases_vides[random_number];
+          int random_number = distrib(gen);
+          int case_choisie = cases_vides[random_number];
 
-        // on remet en ligne/colonne
+         // on remet en ligne/colonne
+          int ligne = case_choisie / 3;
+          int col = case_choisie % 3;
+
+           board[ligne][col] = p2.symbol;
+                info_case = "L'IA a joué en case " + std::to_string(case_choisie + 1);
+            }
+        }
+    }   
+
+    if (case_choisie != -1) {
         int ligne = case_choisie / 3;
         int col = case_choisie % 3;
-
         board[ligne][col] = p2.symbol;
-        info_case = "L'IA a joué en case " + std::to_string(case_choisie + 1);
     }
-    }   
+}
 
     bool Game::check_win(char symbol) const {
     // on verifie si il y a un gagnant sur les lignes et colonnes
@@ -191,7 +285,8 @@ void Game::play_ia_turn() {
     if (board[0][2] == symbol && board[1][1] == symbol && board[2][0] == symbol) return true;
 
     return false;
-}
+    }
+
 
 void Game::run() {
     setup_players();

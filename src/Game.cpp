@@ -64,7 +64,7 @@ void Game::setup_players(){
         } else {
             p2.symbol = 'X';
         }
-        std::cout << "L'IA joue avec " << p2.symbol << std::endl;
+
 
         } else {
         // Si humain, on demande ses infos
@@ -110,7 +110,6 @@ void Game::play_turn(Player& player) {
     int choix = 0;
 
     while (true) {
-        std::cout << info_case << std::endl << std::endl;
         std::cout << player.name << ", choisis une case (1-9) : ";
 
        if (!(std::cin >> choix)) {
@@ -176,7 +175,7 @@ void Game::play_ia_turn() {
         int col = case_choisie % 3;
 
         board[ligne][col] = p2.symbol;
-        info_case = "L'IA a joue en case " + std::to_string(case_choisie + 1);
+        info_case = "L'IA a joué en case " + std::to_string(case_choisie + 1);
     }
     }   
 
@@ -197,10 +196,6 @@ void Game::play_ia_turn() {
 void Game::run() {
     setup_players();
     init_board();
-    
-    std::cout << "DEBUT DE LA PARTIE !" << std::endl;
-    draw_game_board();
-
     bool gagne = false;
 
     // Boucle max de 9 tours
@@ -209,8 +204,18 @@ void Game::run() {
         // efface l'ecran
         erase_terminal(); 
         
-        
         std::cout << " TOUR " << (i + 1) << " / 9 " << std::endl;
+
+        if (i == 0) {
+                // Seulement au tour 1
+                std::cout << "DEBUT DE LA PARTIE !" << std::endl << std::endl;
+                if (mode_ia) {
+                    std::cout << "L'IA joue le symbole " << p2.symbol << std::endl << std::endl;
+                }
+            } else {
+                // on affiche le dernier coup
+                std::cout << ">> DERNIER COUP : " << info_case << " <<" << std::endl;
+            }
         
         // plateau a jour
         draw_game_board();
